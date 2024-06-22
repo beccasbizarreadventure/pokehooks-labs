@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { PokemonContext } from './PokemonContext';
 
 const url = 'https://pokeapi.co/api/v2/pokemon?limit=150&offset=0';
 
 const PokemonsList = () => {
-  const { pokemons, capture, addPokemons } = useContext(PokemonContext);
-  const [pokemonImages, setPokemonImages] = useState([]);
+  const { pokemons, capture, addPokemons, addSprites, pokemonImages } = useContext(PokemonContext);
 
   useEffect(() => {
     const fetchPokemonSprites = async () => {
@@ -27,14 +26,14 @@ const PokemonsList = () => {
           imgUrls.push(imageUrl);
         }
 
-        setPokemonImages(imgUrls);
+        addSprites(imgUrls);
       } catch (error) {
         console.error('Error fetching Pokémon data:', error);
       }
     };
 
     fetchPokemonSprites();
-  }, []);
+  }, [addPokemons, addSprites]);
 
   return (
     <div className="pokemons-list">
@@ -53,7 +52,7 @@ const PokemonsList = () => {
             <tr key={pokemon.name}>
               <td>{pokemon.name}</td>
               <td>
-                {pokemonImages[index] && (
+                {pokemonImages && pokemonImages[index] && (
                   <img src={pokemonImages[index]} alt={pokemon.name} style={{ width: '100px', height: '100px' }} />
                 )}
               </td>
