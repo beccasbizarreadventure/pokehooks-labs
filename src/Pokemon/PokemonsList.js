@@ -23,7 +23,7 @@ const PokemonsList = () => {
           const pokemon = allPKMdata[i];
           const imgResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
           const imgData = await imgResponse.json();
-          const imageUrl = imgData.sprites.front_default;
+          const imageUrl = imgData.sprites.other.showdown.front_default;
           imgUrls.push(imageUrl);
         }
 
