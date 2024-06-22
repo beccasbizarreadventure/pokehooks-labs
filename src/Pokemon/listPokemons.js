@@ -8,6 +8,7 @@ export const usePokemonData = (addPokemons, addSprites) => {
         const data = await response.json();
         const allPKMdata = data.results;
         const imgUrls = [];
+        console.log(Object.keys(allPKMdata));
 
         for (let i = 0; i < allPKMdata.length; i++) {
           const pokemon = allPKMdata[i];
@@ -24,5 +25,5 @@ export const usePokemonData = (addPokemons, addSprites) => {
     };
 
     fetchPokemonSprites();
-  }, []);
+  }, [addPokemons, addSprites]);
 };
