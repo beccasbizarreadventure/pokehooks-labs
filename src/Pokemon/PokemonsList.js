@@ -1,11 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext } from 'react';
 import { PokemonContext } from './PokemonContext';
-import {usePokemonData} from './listPokemons';
+
 
 const PokemonsList = () => {
-  const { pokemons, capture, addPokemons, addSprites, pokemonImages } = useContext(PokemonContext);
-  usePokemonData(addPokemons, addSprites);
+  const { pokemons, capture, pokemonImages, capturedPokemons } = useContext(PokemonContext);
+
+  const handleCapture = (pokemon) => {
+    capture(pokemon);
+    console.log(pokemon);
+    console.log(capturedPokemons);
+  };
 
   return (
     <div className="pokemons-list">
@@ -16,7 +21,6 @@ const PokemonsList = () => {
           <tr>
             <th>Pokemon</th>
             <th>Image</th>
-            <th>Capture</th>
           </tr>
         </thead>
         <tbody>
@@ -29,7 +33,7 @@ const PokemonsList = () => {
                 )}
               </td>
               <td>
-                <button onClick={() => capture(pokemon)}>Capture</button>
+                <button onClick={() => handleCapture(pokemon)}>Capture</button>
               </td>
             </tr>
           ))}

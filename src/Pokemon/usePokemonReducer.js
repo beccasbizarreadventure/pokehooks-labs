@@ -1,5 +1,5 @@
 import { useReducer } from 'react';
-import { CAPTURE, RELEASE, ADD_POKEMON, ADD_POKEMONS, ADD_SPRITES } from './actions';
+import { CAPTURE, RELEASE, ADD_POKEMON, ADD_POKEMONS } from './actions';
 
 const getCapturedPokemons = (capturedPokemons, releasedPokemon) =>
   capturedPokemons.filter((pokemon) => pokemon !== releasedPokemon);
@@ -10,14 +10,16 @@ const releasePokemon = (releasedPokemon, state) => ({
   pokemonImages: state.pokemonImages
 });
 
-const getPokemonsList = (pokemons, capturedPokemon) =>
-  pokemons.filter((pokemon) => pokemon !== capturedPokemon);
+// const getPokemonsList = (pokemons, capturedPokemon) =>
+//   pokemons.filter((pokemon) => pokemon !== capturedPokemon);
 
-const capturePokemon = (pokemon, state) => ({
-  pokemons: getPokemonsList(state.pokemons, pokemon),
-  capturedPokemons: [...state.capturedPokemons, pokemon],
-  pokemonImages: state.pokemonImages
-});
+const capturePokemon = (pokemon, state) => { 
+  return {
+    pokemons: state.pokemons.filter(capturedPokemon => capturedPokemon !== pokemon),
+    capturedPokemons: [...state.capturedPokemons, pokemon],
+    pokemonImages: [...state.pokemonImages, pokemon.imageUrl],
+  };
+};
 
 const addPokemon = (pokemon, state) => ({
   pokemons: [...state.pokemons, pokemon],
@@ -25,10 +27,11 @@ const addPokemon = (pokemon, state) => ({
   pokemonImages: state.pokemonImages
 });
 
-const addPokemons = (pokemons, state) => ({
-  pokemons: pokemons,
+
+const addPokemons = (pokemon, state) => ({
+  pokemons: [...state.pokemons, pokemon],
   capturedPokemons: state.capturedPokemons,
-  pokemonImages: state.pokemonImages
+  pokemonImages: [...state.pokemonImages, pokemon.imageUrl],
 });
 
 const pokemonReducer = (state, action) => {
@@ -41,8 +44,6 @@ const pokemonReducer = (state, action) => {
       return addPokemon(action.pokemon, state);
     case ADD_POKEMONS:
       return addPokemons(action.pokemons, state);
-    case ADD_SPRITES:
-      return {...state, pokemonImages: action.payload};
     default:
       return state;
   }
