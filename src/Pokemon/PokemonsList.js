@@ -4,7 +4,7 @@ import { PokemonContext } from './PokemonContext';
 
 
 const PokemonsList = () => {
-  const { pokemons, capture, pokemonImages, capturedPokemons } = useContext(PokemonContext);
+  const { pokemons, capture, capturedPokemons } = useContext(PokemonContext);
 
   const handleCapture = (pokemon) => {
     capture(pokemon);
@@ -24,13 +24,11 @@ const PokemonsList = () => {
           </tr>
         </thead>
         <tbody>
-          {pokemons.map((pokemon, index) => (
+          {pokemons.map((pokemon) => (
             <tr key={pokemon.name}>
               <td>{pokemon.name}</td>
               <td>
-                {pokemonImages && pokemonImages[index] && (
-                  <img src={pokemonImages[index]} alt={pokemon.name} style={{ width: '100px', height: '100px' }} />
-                )}
+                <img src={pokemon.imageUrl} alt={pokemon.name} style={{ width: '100px', height: '100px' }} />
               </td>
               <td>
                 <button onClick={() => handleCapture(pokemon)}>Capture</button>

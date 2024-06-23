@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { PokemonContext } from './PokemonContext';
 
 const Pokedex = () => {
-  const { capturedPokemons, pokemonImages, release } = useContext(PokemonContext);
+  const { capturedPokemons, release } = useContext(PokemonContext);
 
   const handleRelease = (pokemon) => {
     release(pokemon);
@@ -20,13 +20,11 @@ const Pokedex = () => {
           </tr>
         </thead>
         <tbody>
-          {capturedPokemons.map((pokemon, index) => (
+          {capturedPokemons.map((pokemon) => (
             <tr key={pokemon.name}>
               <td>{pokemon.name}</td>
               <td>
-                {pokemonImages && pokemonImages[index] && (
-                  <img src={pokemonImages[index]} alt={pokemon.name} style={{ width: '100px', height: '100px' }} />
-                )}
+                <img src={pokemon.imageUrl} alt={pokemon.name} style={{ width: '100px', height: '100px' }} />
               </td>
               <td>
                 <button onClick={() => handleRelease(pokemon)}>Release</button>
