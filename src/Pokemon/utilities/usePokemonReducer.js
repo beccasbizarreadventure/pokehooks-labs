@@ -1,5 +1,5 @@
 import { useReducer } from 'react';
-import { CAPTURE, RELEASE, ADD_POKEMON, ADD_POKEMONS } from './actions';
+import { CAPTURE, RELEASE, ADD_POKEMON, ADD_POKEMONS, SET_POKEMON_NAME } from './actions';
 
 const getCapturedPokemons = (capturedPokemons, releasedPokemon) =>
   capturedPokemons.filter((pokemon) => pokemon !== releasedPokemon);
@@ -9,7 +9,7 @@ const getPokemonsList = (pokemons, capturedPokemon) =>
 
 
 const pokemonReducer = (state, action) => {
-  const { type, pokemon, pokemons } = action;
+  const { type, pokemon, pokemons, name } = action;
 
   switch (type) {
     case CAPTURE:
@@ -38,6 +38,12 @@ const pokemonReducer = (state, action) => {
         pokemons: [...state.pokemons, ...pokemons],
       };
 
+    case SET_POKEMON_NAME:
+      return {
+        ...state,
+        pokemonName: name,
+      };
+
     default:
       return state;
   }
@@ -47,4 +53,5 @@ export const usePokemonReducer = () =>
   useReducer(pokemonReducer, {
     pokemons: [],
     capturedPokemons: [],
+    pokemonName: '',
   });
