@@ -14,7 +14,7 @@ export const usePokemonData = (addPokemons) => {
           const imgData = await imgResponse.json();
           const imageUrl = imgData.sprites.other.showdown.front_shiny;
 
-          addPokemons({ ...pokemon, imageUrl });
+          addPokemons([{ ...pokemon, imageUrl }]);;
         }
       } catch (error) {
         console.error('Error fetching Pokémon data:', error);
