@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { PokemonProvider } from './Pokemon/PokemonContext';
-import PokemonsList from './Pokemon/PokemonsList';
-import Pokedex from './Pokemon/Pokedex';
-import PokemonForm from './Pokemon/PokemonForm';
+import { PokemonProvider } from './Pokemon/context/PokemonContext.jsx';
+import PokemonsList from './Pokemon/components/PokemonsList.jsx';
+import Pokedex from './Pokemon/components/Pokedex.jsx';
+import PokemonForm from './Pokemon/components/PokemonForm.jsx';
 
 const App = () => (
   <PokemonProvider>

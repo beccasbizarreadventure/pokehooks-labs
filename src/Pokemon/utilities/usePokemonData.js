@@ -12,7 +12,7 @@ export const usePokemonData = (addPokemon) => {
           const pokemon = allPKMdata[i];
           const imgResponse = await fetch(pokemon.url); 
           const imgData = await imgResponse.json();
-          const imageUrl = imgData.sprites.other.showdown.front_default;
+          const imageUrl = imgData.sprites.other.showdown.front_shiny;
 
           addPokemon({ ...pokemon, imageUrl });
         }

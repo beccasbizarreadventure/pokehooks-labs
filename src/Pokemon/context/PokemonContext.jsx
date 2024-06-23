@@ -1,7 +1,7 @@
 import React, { createContext, useCallback } from 'react';
-import { usePokemonReducer } from './usePokemonReducer';
-import { CAPTURE, RELEASE, ADD_POKEMON, ADD_POKEMONS } from './actions';
-import {usePokemonData} from './usePokemonData';
+import { usePokemonReducer } from '../utilities/usePokemonReducer';
+import { CAPTURE, RELEASE, ADD_POKEMON, ADD_POKEMONS } from '../utilities/actions';
+import {usePokemonData} from '../utilities/usePokemonData';
 
 const PokemonContext = createContext();
 
