@@ -1,15 +1,12 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext } from 'react';
 import { PokemonContext } from '../context/PokemonContext';
 
 
 const PokemonsList = () => {
-  const { pokemons, capture, capturedPokemons } = useContext(PokemonContext);
+  const { pokemons, capture } = useContext(PokemonContext);
 
   const handleCapture = (pokemon) => {
     capture(pokemon);
-    console.log(pokemon);
-    console.log(capturedPokemons);
   };
 
   return (

@@ -19,7 +19,7 @@ const capturePokemon = (pokemon, state) => {
   };
 };
 
-const addPokemon = (pokemon, state) => ({
+const addNewPokemon = (pokemon, state) => ({
   pokemons: [...state.pokemons, pokemon],
   capturedPokemons: state.capturedPokemons
 });
@@ -37,7 +37,7 @@ const pokemonReducer = (state, action) => {
     case RELEASE:
       return releasePokemon(action.pokemon, state);
     case ADD_POKEMON:
-      return addPokemon(action.pokemon, state);
+      return addNewPokemon(action.pokemon, state);
     case ADD_POKEMONS:
       return addPokemons(action.pokemons, state);
     default:

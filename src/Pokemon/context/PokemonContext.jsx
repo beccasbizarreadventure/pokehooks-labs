@@ -11,7 +11,7 @@ const PokemonProvider = (props) => {
 
   const capture = useCallback((pokemon) => dispatch({ type: CAPTURE, pokemon }), [dispatch]);
   const release = useCallback((pokemon) => dispatch({ type: RELEASE, pokemon }), [dispatch]);
-  const addPokemon = useCallback((pokemon) => dispatch({ type: ADD_POKEMON, pokemon }), [dispatch]);
+  const addNewPokemon = useCallback((pokemon) => dispatch({ type: ADD_POKEMON, pokemon }), [dispatch]);
   const addPokemons = useCallback((pokemons) => dispatch({ type: ADD_POKEMONS, pokemons }), [dispatch]);
 
   usePokemonData(addPokemons);
@@ -21,7 +21,7 @@ const PokemonProvider = (props) => {
     capturedPokemons,
     capture,
     release,
-    addPokemon,
+    addNewPokemon,
     addPokemons
   };
 

@@ -1,21 +1,31 @@
 import React, { useContext, useState } from 'react';
 import { PokemonContext } from '../context/PokemonContext';
-import { generateID } from '../generateID';
+import { addNewGuy } from '../utilities/useAddNewGuy';
 
 const PokemonForm = () => {
-  const [pokemonName, setPokemonName] = useState();
-  const { addPokemon } = useContext(PokemonContext);
+  const [pokemonName, setPokemonName] = useState('');
+  const { addNewPokemon } = useContext(PokemonContext);
+  const {fetchPokemon} = addNewGuy();
 
-  const handleNameOnChange = (e) => {
-    setPokemonName(e.target.value);
+  const handleNameOnChange = (event) => {
+    setPokemonName(event.target.value.toLowerCase());
   };
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    addPokemon({
-      id: generateID(),
-      name: pokemonName,
-    });
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    if (!pokemonName.trim()) {
+      alert('Please enter a Pokemon name');
+      return;
+    }
+
+    const newPokemon = await fetchPokemon(pokemonName);
+    if (newPokemon) {
+      addNewPokemon(newPokemon);
+      setPokemonName('');
+    } else {
+      alert('Pokemon not found');
+    }
   };
 
   return (
@@ -23,6 +33,7 @@ const PokemonForm = () => {
       <input
         type="text"
         placeholder="pokemon name"
+        value={pokemonName}
         onChange={handleNameOnChange}
       />
       <input type="submit" value="Add" />

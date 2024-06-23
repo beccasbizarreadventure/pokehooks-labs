@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-export const usePokemonData = (addPokemon) => {
+export const usePokemonData = (addPokemons) => {
   useEffect(() => {
     const fetchPokemon = async () => {
       try {
@@ -14,7 +14,7 @@ export const usePokemonData = (addPokemon) => {
           const imgData = await imgResponse.json();
           const imageUrl = imgData.sprites.other.showdown.front_shiny;
 
-          addPokemon({ ...pokemon, imageUrl });
+          addPokemons({ ...pokemon, imageUrl });
         }
       } catch (error) {
         console.error('Error fetching Pokémon data:', error);
@@ -22,5 +22,5 @@ export const usePokemonData = (addPokemon) => {
     };
 
     fetchPokemon();
-  }, [addPokemon]);
+  }, [addPokemons]);
 };
