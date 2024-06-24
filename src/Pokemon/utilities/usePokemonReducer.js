@@ -1,7 +1,7 @@
 import { useReducer, useEffect } from 'react';
 import { CAPTURE, RELEASE, ADD_POKEMON, ADD_POKEMONS, SET_POKEMON_NAME } from './actions';
 
-const localStorageKey = 'capturedPokemons'; // Key for local storage
+const capturedPokemonsKey = 'capturedPokemons'; // Key for local storage
 
 const getCapturedPokemons = (capturedPokemons, releasedPokemon) =>
   capturedPokemons.filter((pokemon) => pokemon !== releasedPokemon);
@@ -15,7 +15,7 @@ const pokemonReducer = (state, action) => {
   switch (type) {
     case CAPTURE:
       const newCapturedPokemons = [...state.capturedPokemons, pokemon];
-      localStorage.setItem(localStorageKey, JSON.stringify(newCapturedPokemons));
+      localStorage.setItem(capturedPokemonsKey, JSON.stringify(newCapturedPokemons));
       return {
         ...state,
         pokemons: getPokemonsList(state.pokemons, pokemon),
@@ -24,7 +24,7 @@ const pokemonReducer = (state, action) => {
 
     case RELEASE:
       const updatedCapturedPokemons = getCapturedPokemons(state.capturedPokemons, pokemon);
-      localStorage.setItem(localStorageKey, JSON.stringify(updatedCapturedPokemons));
+      localStorage.setItem(capturedPokemonsKey, JSON.stringify(updatedCapturedPokemons));
       return {
         ...state,
         pokemons: [...state.pokemons, pokemon],
@@ -57,7 +57,7 @@ const pokemonReducer = (state, action) => {
 export const usePokemonReducer = () => {
   const initialState = {
     pokemons: [],
-    capturedPokemons: JSON.parse(localStorage.getItem(localStorageKey)) || [], // Load from local storage if available
+    capturedPokemons: JSON.parse(localStorage.getItem(capturedPokemonsKey)) || [], // Load from local storage if available
     pokemonName: '',
   };
 
@@ -65,7 +65,7 @@ export const usePokemonReducer = () => {
 
   // Update local storage whenever capturedPokemons state changes
   useEffect(() => {
-    localStorage.setItem(localStorageKey, JSON.stringify(state.capturedPokemons));
+    localStorage.setItem(capturedPokemonsKey, JSON.stringify(state.capturedPokemons));
   }, [state.capturedPokemons]);
 
   return [state, dispatch];
