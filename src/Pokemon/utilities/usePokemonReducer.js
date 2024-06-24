@@ -1,7 +1,7 @@
 import { useReducer, useEffect } from 'react';
 import { CAPTURE, RELEASE, ADD_POKEMON, ADD_POKEMONS, SET_POKEMON_NAME } from './actions';
 
-const capturedPokemonsKey = 'capturedPokemons'; // Key for local storage
+const capturedPokemonsKey = 'capturedPokemons'; 
 
 const getCapturedPokemons = (capturedPokemons, releasedPokemon) =>
   capturedPokemons.filter((pokemon) => pokemon !== releasedPokemon);
@@ -57,13 +57,12 @@ const pokemonReducer = (state, action) => {
 export const usePokemonReducer = () => {
   const initialState = {
     pokemons: [],
-    capturedPokemons: JSON.parse(localStorage.getItem(capturedPokemonsKey)) || [], // Load from local storage if available
+    capturedPokemons: JSON.parse(localStorage.getItem(capturedPokemonsKey)) || [], 
     pokemonName: '',
   };
 
   const [state, dispatch] = useReducer(pokemonReducer, initialState);
 
-  // Update local storage whenever capturedPokemons state changes
   useEffect(() => {
     localStorage.setItem(capturedPokemonsKey, JSON.stringify(state.capturedPokemons));
   }, [state.capturedPokemons]);
