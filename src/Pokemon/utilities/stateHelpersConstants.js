@@ -2,11 +2,6 @@ export const capturedPokemonsKey = 'capturedPokemons';
 export const pokemonNameKey = 'pokemonName';
 export const pokemonsKey = 'pokemons';
 
-
-export const pokemonExists = (pokemons, newPokemon) => {
-  return pokemons.some(pokemon => pokemon.name === newPokemon.name);
-};
-
 export const capturedPokemonsExists = (capturedPokemons, newPokemon) => {
   return capturedPokemons.some(pokemon => pokemon.name === newPokemon.name);
 };

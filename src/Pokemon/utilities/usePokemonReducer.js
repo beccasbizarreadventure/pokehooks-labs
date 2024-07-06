@@ -1,6 +1,6 @@
 import { useReducer, useEffect } from 'react';
 import { CAPTURE, RELEASE, ADD_NEW_POKEMON, ADD_POKEMONS, SET_POKEMON_NAME } from './actions';
-import { capturedPokemonsKey, pokemonsKey, pokemonNameKey, pokemonExists, capturedPokemonsExists, getCapturedPokemons, getPokemonsList } from './stateHelpersConstants';
+import { capturedPokemonsKey, pokemonsKey, pokemonNameKey, capturedPokemonsExists, getCapturedPokemons, getPokemonsList } from './stateHelpersConstants';
 
 const pokemonReducer = (state, action) => {
   const { type, pokemon, pokemons, name } = action;
@@ -8,7 +8,6 @@ const pokemonReducer = (state, action) => {
   switch (type) {
     case CAPTURE:
       const newCapturedPokemons = [...state.capturedPokemons, pokemon];
-      localStorage.setItem(capturedPokemonsKey, JSON.stringify(newCapturedPokemons));
       return {
         ...state,
         pokemons: getPokemonsList(state.pokemons, pokemon),
@@ -17,7 +16,6 @@ const pokemonReducer = (state, action) => {
 
     case RELEASE:
       const updatedCapturedPokemons = getCapturedPokemons(state.capturedPokemons, pokemon);
-      localStorage.setItem(capturedPokemonsKey, JSON.stringify(updatedCapturedPokemons));
       return {
         ...state,
         pokemons: [...state.pokemons, pokemon],
@@ -31,9 +29,12 @@ const pokemonReducer = (state, action) => {
       };
 
     case ADD_POKEMONS:
+      const removedCapturedPokemons = pokemons.filter(newPokemon => 
+        !capturedPokemonsExists(state.capturedPokemons, newPokemon)
+      );
       return {
         ...state,
-        pokemons: [...state.pokemons, ...pokemons],
+        pokemons: removedCapturedPokemons,
       };
 
     case SET_POKEMON_NAME:
