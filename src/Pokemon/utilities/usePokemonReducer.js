@@ -1,5 +1,5 @@
 import { useReducer, useEffect } from 'react';
-import { CAPTURE, RELEASE, ADD_POKEMON, ADD_POKEMONS, SET_POKEMON_NAME } from './actions';
+import { CAPTURE, RELEASE, ADD_NEW_POKEMON, ADD_POKEMONS, SET_POKEMON_NAME } from './actions';
 
 const capturedPokemonsKey = 'capturedPokemons'; 
 
@@ -31,7 +31,7 @@ const pokemonReducer = (state, action) => {
         capturedPokemons: updatedCapturedPokemons,
       };
 
-    case ADD_POKEMON:
+    case ADD_NEW_POKEMON:
       return {
         ...state,
         pokemons: [...state.pokemons, pokemon],
