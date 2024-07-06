@@ -8,14 +8,22 @@ export const usePokemonData = (addPokemons) => {
         const data = await response.json();
         const allPKMdata = data.results;
 
-        for (let i = 0; i < allPKMdata.length; i++) {
-          const pokemon = allPKMdata[i];
-          const imgResponse = await fetch(pokemon.url); 
+        // Create an array of promises where each promise fetches a Pokemon's data (imgData) and constructs an object { ...pokemon, imageUrl }
+        const promises = allPKMdata.map(async (pokemon) => {
+          const imgResponse = await fetch(pokemon.url);
           const imgData = await imgResponse.json();
           const imageUrl = imgData.sprites.other.showdown.front_shiny;
 
-          addPokemons([{ ...pokemon, imageUrl }]);;
-        }
+          return { ...pokemon, imageUrl };
+        });
+
+        // Wait for all promises to resolve
+        const pokemonData = await Promise.all(promises);
+        
+        // Add all fetched Pokemon data at once
+        addPokemons(pokemonData);
+        console.log(pokemonData);
+        
       } catch (error) {
         console.error('Error fetching Pokémon data:', error);
       }

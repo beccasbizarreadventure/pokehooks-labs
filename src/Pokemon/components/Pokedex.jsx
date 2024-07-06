@@ -3,6 +3,7 @@ import { PokemonContext } from '../context/PokemonContext';
 
 const Pokedex = () => {
   const { capturedPokemons, release } = useContext(PokemonContext);
+  console.log(capturedPokemons)
 
   const handleRelease = (pokemon) => {
     release(pokemon);
