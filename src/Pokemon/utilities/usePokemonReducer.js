@@ -1,13 +1,6 @@
 import { useReducer, useEffect } from 'react';
 import { CAPTURE, RELEASE, ADD_NEW_POKEMON, ADD_POKEMONS, SET_POKEMON_NAME } from './actions';
-
-const capturedPokemonsKey = 'capturedPokemons'; 
-
-const getCapturedPokemons = (capturedPokemons, releasedPokemon) =>
-  capturedPokemons.filter((pokemon) => pokemon !== releasedPokemon);
-
-const getPokemonsList = (pokemons, capturedPokemon) =>
-  pokemons.filter((pokemon) => pokemon !== capturedPokemon);
+import { capturedPokemonsKey, pokemonsKey, pokemonNameKey, pokemonExists, capturedPokemonsExists, getCapturedPokemons, getPokemonsList } from './stateHelpersConstants';
 
 const pokemonReducer = (state, action) => {
   const { type, pokemon, pokemons, name } = action;
@@ -66,6 +59,10 @@ export const usePokemonReducer = () => {
   useEffect(() => {
     localStorage.setItem(capturedPokemonsKey, JSON.stringify(state.capturedPokemons));
   }, [state.capturedPokemons]);
+
+  useEffect(() => {
+    localStorage.setItem(pokemonsKey, JSON.stringify(state.pokemons));
+  }, [state.pokemons]);
 
   return [state, dispatch];
 };
