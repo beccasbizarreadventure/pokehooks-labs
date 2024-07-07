@@ -70,7 +70,6 @@ const PokemonProvider = (props) => {
     capture,
     release,
     addNewPokemon,
-    // addPokemons,
     setPokemonName,
   };
 

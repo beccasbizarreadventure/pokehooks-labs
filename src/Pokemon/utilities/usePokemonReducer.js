@@ -1,6 +1,6 @@
 import { useReducer, useEffect } from 'react';
 import { CAPTURE, RELEASE, ADD_NEW_POKEMON, ADD_POKEMONS, SET_POKEMON_NAME } from './actions';
-import { capturedPokemonsKey, pokemonsKey, capturedPokemonsExists, getCapturedPokemons, getPokemonsList } from './stateHelpersConstants';
+import { capturedPokemonsKey, pokemonsKey, capturedPokemonsExists, pokemonExists, getCapturedPokemons, getPokemonsList } from './stateHelpersConstants';
 
 const pokemonReducer = (state, action) => {
   const { type, pokemon, pokemons, name } = action;
@@ -30,14 +30,20 @@ const pokemonReducer = (state, action) => {
         pokemons: updatedWithNewPokemon,
       };
 
-    case ADD_POKEMONS:
-      const removedCapturedPokemons = pokemons.filter(newPokemon =>
-        !capturedPokemonsExists(state.capturedPokemons, newPokemon)
-      );
-      return {
-        ...state,
-        pokemons: removedCapturedPokemons,
-      };
+      case ADD_POKEMONS:
+        // Filter out captured pokemons and existing pokemon from the new data
+        const filteredPokemons = pokemons.filter(newPokemon =>
+          !capturedPokemonsExists(state.capturedPokemons, newPokemon) &&
+          !pokemonExists(state.pokemons, newPokemon)
+        );
+        
+        // Combine filtered pokemons with existing pokemons in state
+        const updatedPokemons = [...state.pokemons, ...filteredPokemons];
+        
+        return {
+          ...state,
+          pokemons: updatedPokemons,
+        };
 
     case SET_POKEMON_NAME:
       return {

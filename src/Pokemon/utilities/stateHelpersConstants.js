@@ -8,6 +8,10 @@ export const capturedPokemonsExists = (capturedPokemons, newPokemon) => {
   return capturedPokemons.some(pokemon => pokemon.name === newPokemon.name);
 };
 
+export const pokemonExists = (pokemons, newPokemon) => {
+  return pokemons.some(pokemon => pokemon.name === newPokemon.name);
+};
+
 export const getCapturedPokemons = (capturedPokemons, releasedPokemon) => {
   const updatedCapturedPokemons = capturedPokemons.filter((pokemon) => pokemon !== releasedPokemon);
   localStorage.setItem(capturedPokemonsKey, JSON.stringify(updatedCapturedPokemons));
