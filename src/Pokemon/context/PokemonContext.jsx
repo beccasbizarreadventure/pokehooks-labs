@@ -7,6 +7,7 @@ import {
   ADD_POKEMONS,
   SET_POKEMON_NAME,
 } from "../utilities/actions";
+import axios from "axios";
 
 const PokemonContext = createContext();
 
@@ -30,23 +31,21 @@ const PokemonProvider = (props) => {
   useEffect(() => {
     const fetchPokemon = async () => {
       try {
-        const response = await fetch(
+        const response = await axios.get(
           "https://pokeapi.co/api/v2/pokemon?limit=15&offset=0"
         );
-        const data = await response.json();
-        const allPKMdata = data.results;
+        const allPKMdata = response.data.results;
 
         // Create an array of promises where each promise fetches a Pokemon's data (imgData) and constructs an object { ...pokemon, imageUrl }
-        const promises = allPKMdata.map(async (pokemon) => {
-          const imgResponse = await fetch(pokemon.url);
-          const imgData = await imgResponse.json();
-          const imageUrl = imgData.sprites.other.showdown.front_shiny;
-
-          return { ...pokemon, imageUrl };
+        const pokemonPromises = allPKMdata.map(async (pokemon) => {
+          const pokemonResponse = await axios.get(pokemon.url);
+          const { id, name, sprites } = pokemonResponse.data;
+          const imageUrl = sprites.other.showdown.front_shiny;
+          return { id: id, name: name, url: pokemon.url, imageUrl: imageUrl };
         });
 
         // Wait for all promises to resolve
-        const pokemonData = await Promise.all(promises);
+        const pokemonData = await Promise.all(pokemonPromises);
 
         // Add all fetched Pokemon data at once
         dispatch({ type: ADD_POKEMONS, pokemons: pokemonData });
