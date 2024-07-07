@@ -4,7 +4,7 @@ import { PokemonContext } from '../context/PokemonContext';
 
 const PokemonsList = () => {
   const { pokemons, capture } = useContext(PokemonContext);
-  console.log(pokemons);
+  // console.log(pokemons);
 
   const handleCapture = (pokemon) => {
     capture(pokemon);

@@ -59,11 +59,16 @@ export const usePokemonReducer = () => {
 
   const [state, dispatch] = useReducer(pokemonReducer, initialState);
 
+  console.log('Initial pokemons state', state.pokemons);
+  console.log('Initial captured pokemons state', state.capturedPokemons);
+
   useEffect(() => {
+    console.log('Updating capturedPokemons in localStorage:', state.capturedPokemons);
     localStorage.setItem(capturedPokemonsKey, JSON.stringify(state.capturedPokemons));
   }, [state.capturedPokemons]);
 
   useEffect(() => {
+    console.log('Updating pokemons in localStorage:', state.pokemons);
     localStorage.setItem(pokemonsKey, JSON.stringify(state.pokemons));
   }, [state.pokemons]);
 
