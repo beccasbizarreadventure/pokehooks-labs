@@ -1,5 +1,5 @@
 export const addNewGuy = () => {
-  const fetchPokemon = async (pokemonName) => {
+  const fetchNewPokemon = async (pokemonName) => {
     try {
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
       console.log(response)
@@ -7,11 +7,11 @@ export const addNewGuy = () => {
         throw new Error('Pokemon not found');
       }
       const data = await response.json();
-      const pokemon = data;
+      const pokemon = data.name;
       console.log(pokemon);
-      const imageUrl = pokemon.sprites.other.showdown.front_shiny;
+      const imageUrl = data.sprites.other.showdown.front_shiny;
 
-      return { ...pokemon, imageUrl };
+      return { name: pokemon, url:`https://pokeapi.co/api/v2/pokemon/${data.id}`, imageUrl: imageUrl };
 
     } catch (error) {
       console.error('Error fetching Pokemon:', error.message);
@@ -19,5 +19,5 @@ export const addNewGuy = () => {
     }
   };
 
-  return { fetchPokemon };
+  return { fetchNewPokemon };
 };

@@ -1,7 +1,9 @@
 export const capturedPokemonsKey = 'capturedPokemons';
-export const pokemonNameKey = 'pokemonName';
 export const pokemonsKey = 'pokemons';
 
+//Array.some tests whether at least one element in the array passes the test implemented by the provided function. 
+//It returns true if, in the array, it finds an element for which the provided function returns true; 
+//otherwise it returns false. It doesn't modify the array
 export const capturedPokemonsExists = (capturedPokemons, newPokemon) => {
   return capturedPokemons.some(pokemon => pokemon.name === newPokemon.name);
 };

@@ -22,7 +22,6 @@ export const usePokemonData = (addPokemons) => {
         
         // Add all fetched Pokemon data at once
         addPokemons(pokemonData);
-        console.log(pokemonData);
         
       } catch (error) {
         console.error('Error fetching Pokémon data:', error);

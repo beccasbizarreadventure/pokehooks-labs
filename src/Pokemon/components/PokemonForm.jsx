@@ -5,7 +5,7 @@ import { addNewGuy } from '../utilities/useAddNewGuy';
 const PokemonForm = () => {
   
   const { addNewPokemon, pokemonName, setPokemonName } = useContext(PokemonContext);
-  const {fetchPokemon} = addNewGuy();
+  const { fetchNewPokemon } = addNewGuy();
 
   const handleNameOnChange = (event) => {
     setPokemonName(event.target.value.toLowerCase());
@@ -19,7 +19,8 @@ const PokemonForm = () => {
       return;
     }
 
-    const newPokemon = await fetchPokemon(pokemonName);
+    const newPokemon = await fetchNewPokemon(pokemonName);
+
     if (newPokemon) {
       addNewPokemon(newPokemon);
       setPokemonName('');

@@ -8,7 +8,6 @@ const PokemonContext = createContext();
 const PokemonProvider = (props) => {
   const [state, dispatch] = usePokemonReducer();
   const { pokemons, capturedPokemons, pokemonName } = state;
-
   const capture = useCallback((pokemon) => dispatch({ type: CAPTURE, pokemon }), [dispatch]);
   const release = useCallback((pokemon) => dispatch({ type: RELEASE, pokemon }), [dispatch]);
   const addNewPokemon = useCallback((pokemon) => dispatch({ type: ADD_NEW_POKEMON, pokemon }), [dispatch]);
