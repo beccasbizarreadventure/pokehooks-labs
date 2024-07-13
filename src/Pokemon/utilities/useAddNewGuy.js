@@ -9,10 +9,10 @@ export const addNewGuy = () => {
         throw new Error('Pokemon not found');
       }
       const data = response.data;
-      const {name, id} = data;
-      const imageUrl = data.sprites.other.showdown.front_dafault;
-
-      return { id: id, name: name, url:`https://pokeapi.co/api/v2/pokemon/${id}`, imageUrl: imageUrl };
+      const {name, id, types, sprites } = data;
+      const imageUrl = sprites.other.showdown.front_default;
+      const type = types[0].type.name;
+      return { id: id, name: name, url:`https://pokeapi.co/api/v2/pokemon/${id}`, imageUrl: imageUrl, type: type };
 
     } catch (error) {
       console.error('Error fetching Pokemon:', error.message);
