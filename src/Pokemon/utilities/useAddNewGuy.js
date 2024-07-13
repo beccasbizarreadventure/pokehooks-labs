@@ -10,7 +10,7 @@ export const addNewGuy = () => {
       }
       const data = response.data;
       const {name, id} = data;
-      const imageUrl = data.sprites.other.showdown.front_shiny;
+      const imageUrl = data.sprites.other.showdown.front_dafault;
 
       return { id: id, name: name, url:`https://pokeapi.co/api/v2/pokemon/${id}`, imageUrl: imageUrl };
 

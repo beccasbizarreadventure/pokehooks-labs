@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useEffect } from "react";
+import React, { createContext, useEffect } from "react";
 import { usePokemonReducer } from "../utilities/usePokemonReducer";
 import {
   CAPTURE,
@@ -14,40 +14,30 @@ const PokemonContext = createContext();
 const PokemonProvider = (props) => {
   const [state, dispatch] = usePokemonReducer();
   const { pokemons, capturedPokemons, pokemonName } = state;
-  const capture = useCallback(
-    (pokemon) => dispatch({ type: CAPTURE, pokemon }),
-    [dispatch]
-  );
-  const release = useCallback(
-    (pokemon) => dispatch({ type: RELEASE, pokemon }),
-    [dispatch]
-  );
 
-  const setPokemonName = useCallback(
-    (name) => dispatch({ type: SET_POKEMON_NAME, name }),
-    [dispatch]
-  );
+  const capture = (pokemon) => dispatch({ type: CAPTURE, pokemon });
+  const release = (pokemon) => dispatch({ type: RELEASE, pokemon });
+  const setPokemonName = (name) => dispatch({ type: SET_POKEMON_NAME, name });
+  const addNewPokemon = (pokemon) => dispatch({ type: ADD_NEW_POKEMON, pokemon });
 
   useEffect(() => {
     const fetchPokemon = async () => {
       try {
         const response = await axios.get(
-          "https://pokeapi.co/api/v2/pokemon?limit=15&offset=0"
+          "https://pokeapi.co/api/v2/pokemon?limit=25&offset=0"
         );
         const allPKMdata = response.data.results;
-
         // Create an array of promises where each promise fetches a Pokemon's data (imgData) and constructs an object { ...pokemon, imageUrl }
         const pokemonPromises = allPKMdata.map(async (pokemon) => {
           const pokemonResponse = await axios.get(pokemon.url);
-          const { id, name, sprites } = pokemonResponse.data;
-          const imageUrl = sprites.other.showdown.front_shiny;
-          return { id: id, name: name, url: pokemon.url, imageUrl: imageUrl };
+          const { id, name, sprites, types } = pokemonResponse.data;
+          const imageUrl = sprites.other.showdown.front_default;
+          const type = types[0].type.name;
+          return { id: id, name: name, url: pokemon.url, imageUrl: imageUrl, type: type };
         });
 
-        // Wait for all promises to resolve
         const pokemonData = await Promise.all(pokemonPromises);
 
-        // Add all fetched Pokemon data at once
         dispatch({ type: ADD_POKEMONS, pokemons: pokemonData });
       } catch (error) {
         console.error("Error fetching Pokémon data:", error);
@@ -56,11 +46,6 @@ const PokemonProvider = (props) => {
 
     fetchPokemon();
   }, [dispatch]);
-
-  const addNewPokemon = useCallback(
-    (pokemon) => dispatch({ type: ADD_NEW_POKEMON, pokemon }),
-    [dispatch]
-  );
 
   const providerValue = {
     pokemons,
